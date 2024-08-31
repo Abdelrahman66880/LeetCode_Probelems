@@ -1,0 +1,22 @@
+/* Corrected T-SQL query statement */
+SELECT 
+    e.salary AS Salary, 
+    e.name AS Employee, 
+    d.name AS Department
+FROM 
+    Employee e
+LEFT JOIN 
+    Department d ON e.departmentId = d.id
+INNER JOIN 
+    (
+        SELECT 
+            departmentId, 
+            MAX(salary) AS MaxSalary
+        FROM 
+            Employee
+        GROUP BY 
+            departmentId
+    ) maxSalaries ON e.departmentId = maxSalaries.departmentId 
+                 AND e.salary = maxSalaries.MaxSalary
+ORDER BY 
+    Department;
