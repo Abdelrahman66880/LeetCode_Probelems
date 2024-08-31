@@ -1,0 +1,12 @@
+/* Write your T-SQL query statement below */
+SELECT 
+    Users.name, 
+    SUM(CASE WHEN distance IS NULL THEN 0 ELSE distance END) AS travelled_distance
+FROM 
+    Users 
+LEFT JOIN 
+    Rides ON Rides.user_id = Users.id
+GROUP BY 
+    Users.id, Users.name
+ORDER BY 
+    travelled_distance DESC, Users.name;
