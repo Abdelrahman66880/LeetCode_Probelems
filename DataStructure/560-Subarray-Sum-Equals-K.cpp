@@ -1,19 +1,24 @@
 class Solution {
 public:
     int subarraySum(vector<int>& nums, int k) {
-        int counter = 0;
+        int n = nums.size();
+        vector<int> prefix(n + 1, 0); // Create a prefix array with size n + 1
 
-        // Iterate through all possible subarrays
-        for (int i = 0; i < nums.size(); i++) {
-            int sum = 0;
-            for (int j = i; j < nums.size(); j++) {
-                sum += nums[j]; // Calculate sum of the subarray [i, j]
+        // Compute the prefix sums
+        for (int i = 0; i < n; i++) {
+            prefix[i + 1] = prefix[i] + nums[i];
+        }
+
+        int counter = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = i; j < n; j++) {
+                int sum = prefix[j + 1] - prefix[i];
                 if (sum == k) {
-                    counter++; // Increment counter if sum matches k
+                    counter++;
                 }
             }
         }
 
-        return counter; // Return the total count of subarrays
+        return counter;
     }
 };
